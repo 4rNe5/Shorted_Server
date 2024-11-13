@@ -77,7 +77,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", ""],  # React 프론트엔드 주소
+    allow_origins=["http://localhost:3000"],  # React 프론트엔드 주소
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -158,6 +158,9 @@ async def get_url_stats(short_id: str, db: Session = Depends(get_db)):
         "top_referrers": [{"referrer": r.referrer or "Direct", "count": r.count} for r in top_referrers]
     }
 
+@app.get('/')
+def redirect_create():
+    return RedirectResponse('/create', status_code=301)
 
 @app.get("/{short_id}")
 async def redirect_url(
