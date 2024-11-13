@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from sqlalchemy import create_engine, Column, String, DateTime, Integer, func
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.orm import declarative_base
 from redis import Redis
@@ -12,8 +11,6 @@ import random
 import validators
 from typing import Optional, List
 from pydantic import BaseModel
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
 from fastapi_cache.decorator import cache
 import os
 from dotenv import load_dotenv
@@ -80,7 +77,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React 프론트엔드 주소
+    allow_origins=["http://localhost:3000", ""],  # React 프론트엔드 주소
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
